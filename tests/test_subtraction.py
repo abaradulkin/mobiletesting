@@ -11,14 +11,19 @@
 """
 
 import pytest
+import allure
 from page_objects.calculator_page import CalculatorPage
 
 
+@allure.feature("Subtraction")
+@allure.story("Basic Operations")
 @pytest.mark.calculator
 @pytest.mark.subtraction
 class TestSubtractionBasic:
     """Базовые тесты операции вычитания."""
     
+    @allure.title("Smoke test: 5 - 3 = 2")
+    @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.smoke
     def test_subtraction_5_minus_3(self, calculator):
         """
@@ -91,6 +96,8 @@ class TestSubtractionBasic:
         assert result == 0, f"Expected 7-7=0, but got {result}"
 
 
+@allure.feature("Subtraction")
+@allure.story("Operations with Zero")
 @pytest.mark.calculator
 @pytest.mark.subtraction
 class TestSubtractionWithZero:
@@ -145,6 +152,8 @@ class TestSubtractionWithZero:
             f"Expected {expected} or negative number, but got {result}"
 
 
+@allure.feature("Subtraction")
+@allure.story("Negative Results")
 @pytest.mark.calculator
 @pytest.mark.subtraction
 class TestSubtractionNegativeResults:
@@ -173,6 +182,8 @@ class TestSubtractionNegativeResults:
             f"Expected {num1}-{num2}={expected}, but got {result}"
 
 
+@allure.feature("Subtraction")
+@allure.story("Multiple Button Presses")
 @pytest.mark.calculator
 @pytest.mark.subtraction
 class TestSubtractionMultiplePresses:
@@ -199,6 +210,8 @@ class TestSubtractionMultiplePresses:
             f"Expected 10-3=7 (ignoring multiple - presses), but got {result}"
 
 
+@allure.feature("Subtraction")
+@allure.story("Chain Operations")
 @pytest.mark.calculator
 @pytest.mark.subtraction
 class TestSubtractionChains:
@@ -282,6 +295,8 @@ class TestSubtractionChains:
             f"Expected final result 12, but got {final_result}"
 
 
+@allure.feature("Subtraction")
+@allure.story("Large Numbers")
 @pytest.mark.calculator
 @pytest.mark.subtraction
 class TestSubtractionLargeNumbers:
@@ -308,6 +323,8 @@ class TestSubtractionLargeNumbers:
             f"Expected {num1}-{num2}={expected}, but got {result}"
 
 
+@allure.feature("Subtraction")
+@allure.story("Special Cases")
 @pytest.mark.calculator
 @pytest.mark.subtraction
 class TestSubtractionSpecialCases:
@@ -418,6 +435,8 @@ class TestSubtractionSpecialCases:
             f"Expected 5-1=4, but got {result2}"
 
 
+@allure.feature("Subtraction")
+@allure.story("Edge Cases")
 @pytest.mark.calculator
 @pytest.mark.subtraction
 @pytest.mark.regression

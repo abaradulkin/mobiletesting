@@ -98,6 +98,63 @@ pytest --html=report.html --self-contained-html
 pytest -n 2  # Запуск на 2 параллельных workers
 ```
 
+### 6. Allure отчеты
+
+Проект поддерживает генерацию красивых и детальных отчетов с помощью Allure Framework.
+
+#### Установка Allure CLI
+
+**macOS:**
+```bash
+brew install allure
+```
+
+**Windows:**
+```bash
+scoop install allure
+```
+
+**Linux:**
+```bash
+# Скачайте и распакуйте из https://github.com/allure-framework/allure2/releases
+```
+
+#### Запуск тестов с Allure
+
+```bash
+# Запуск тестов с сохранением результатов для Allure
+pytest --alluredir=allure-results
+
+# Запуск только smoke тестов с Allure
+pytest -m smoke --alluredir=allure-results
+
+# Запуск тестов на Android с Allure
+pytest --platform android --alluredir=allure-results
+```
+
+#### Генерация и просмотр отчета
+
+```bash
+# Генерация отчета
+allure generate allure-results -o allure-report --clean
+
+# Открытие отчета в браузере
+allure open allure-report
+
+# Или генерация и открытие одной командой
+allure serve allure-results
+```
+
+#### Что включено в Allure отчеты
+
+- ✅ **Группировка по фичам**: Addition, Subtraction
+- ✅ **Детальные шаги**: Каждое действие (enter number, tap button) отображается как отдельный шаг
+- ✅ **Скриншоты при падении**: Автоматически прикрепляются к отчету
+- ✅ **Severity levels**: Critical (smoke тесты), Normal (остальные)
+- ✅ **Parametrized tests**: Четко показывает все комбинации параметров
+- ✅ **История запусков**: Тренды и статистика по времени
+- ✅ **Categorization**: Автоматическая категоризация ошибок
+
 ## 📱 DeviceManager - Центральный компонент
 
 `DeviceManager` - это Singleton класс, который обеспечивает:

@@ -12,6 +12,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.common.exceptions import TimeoutException
 import logging
+import allure
 
 from utils.device_manager import DeviceManager
 
@@ -154,6 +155,7 @@ class CalculatorPage:
         self._tap_element(str(number))
         return self
     
+    @allure.step("Enter number: {number}")
     def enter_number(self, number: int) -> 'CalculatorPage':
         """
         Вводит многозначное число (последовательно нажимает цифры).
@@ -172,31 +174,37 @@ class CalculatorPage:
     
     # ==================== Операции ====================
     
+    @allure.step("Tap plus button")
     def tap_plus(self) -> 'CalculatorPage':
         """Нажимает кнопку сложения (+)."""
         self._tap_element('plus')
         return self
     
+    @allure.step("Tap minus button")
     def tap_minus(self) -> 'CalculatorPage':
         """Нажимает кнопку вычитания (-)."""
         self._tap_element('minus')
         return self
     
+    @allure.step("Tap multiply button")
     def tap_multiply(self) -> 'CalculatorPage':
         """Нажимает кнопку умножения (×)."""
         self._tap_element('multiply')
         return self
     
+    @allure.step("Tap divide button")
     def tap_divide(self) -> 'CalculatorPage':
         """Нажимает кнопку деления (÷)."""
         self._tap_element('divide')
         return self
     
+    @allure.step("Tap equals button")
     def tap_equals(self) -> 'CalculatorPage':
         """Нажимает кнопку равно (=)."""
         self._tap_element('equals')
         return self
     
+    @allure.step("Clear display")
     def tap_clear(self) -> 'CalculatorPage':
         """
         Нажимает кнопку очистки (C или AC) или Delete.
@@ -261,6 +269,7 @@ class CalculatorPage:
     
     # ==================== Получение результата ====================
     
+    @allure.step("Get result from display")
     def get_result(self) -> str:
         """
         Получает текущий результат с экрана калькулятора.
@@ -286,6 +295,7 @@ class CalculatorPage:
             logger.warning("Result element not found, returning empty string")
             return ""
     
+    @allure.step("Get result as number")
     def get_result_as_number(self) -> float:
         """
         Получает результат как число (float).
@@ -305,6 +315,7 @@ class CalculatorPage:
     
     # ==================== Высокоуровневые методы ====================
     
+    @allure.step("Calculate addition: {num1} + {num2}")
     def calculate_addition(self, num1: int, num2: int) -> str:
         """
         Выполняет сложение двух чисел: num1 + num2
@@ -324,6 +335,7 @@ class CalculatorPage:
         self.tap_equals()
         return self.get_result()
     
+    @allure.step("Calculate subtraction: {num1} - {num2}")
     def calculate_subtraction(self, num1: int, num2: int) -> str:
         """
         Выполняет вычитание: num1 - num2
@@ -343,6 +355,7 @@ class CalculatorPage:
         self.tap_equals()
         return self.get_result()
     
+    @allure.step("Calculate multiplication: {num1} × {num2}")
     def calculate_multiplication(self, num1: int, num2: int) -> str:
         """
         Выполняет умножение: num1 × num2
@@ -362,6 +375,7 @@ class CalculatorPage:
         self.tap_equals()
         return self.get_result()
     
+    @allure.step("Calculate division: {num1} ÷ {num2}")
     def calculate_division(self, num1: int, num2: int) -> str:
         """
         Выполняет деление: num1 ÷ num2
@@ -381,6 +395,7 @@ class CalculatorPage:
         self.tap_equals()
         return self.get_result()
     
+    @allure.step("Clear calculator display")
     def clear_display(self) -> 'CalculatorPage':
         """
         Очищает дисплей калькулятора.
@@ -392,6 +407,7 @@ class CalculatorPage:
         logger.info("Display cleared")
         return self
     
+    @allure.step("Check if calculator is opened")
     def is_calculator_opened(self) -> bool:
         """
         Проверяет, открыт ли калькулятор (проверяет наличие кнопки 0).

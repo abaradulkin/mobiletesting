@@ -10,6 +10,7 @@ Pytest configuration file с fixtures и hooks.
 import pytest
 import json
 import os
+import allure
 from pathlib import Path
 from appium import webdriver
 from appium.options.ios import XCUITestOptions
@@ -243,6 +244,7 @@ def calculator(device_manager, screenshot_on_failure) -> CalculatorPage:
 def screenshot_on_failure(request, device_manager):
     """
     Fixture для автоматического создания скриншота при падении теста.
+    Скриншот сохраняется локально и прикрепляется к Allure отчету.
     
     Использование:
         def test_something(screenshot_on_failure, app):
@@ -261,6 +263,14 @@ def screenshot_on_failure(request, device_manager):
             screenshot_path = screenshot_dir / f"{test_name}_failure.png"
             device_manager.take_screenshot(str(screenshot_path))
             print(f"\n📸 Screenshot saved: {screenshot_path}")
+            
+            # Прикрепляем скриншот к Allure отчету
+            with open(screenshot_path, "rb") as image_file:
+                allure.attach(
+                    image_file.read(),
+                    name=f"Screenshot: {test_name}",
+                    attachment_type=allure.attachment_type.PNG
+                )
         except Exception as e:
             print(f"\n⚠️ Could not save screenshot: {e}")
 

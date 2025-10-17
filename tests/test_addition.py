@@ -11,6 +11,7 @@
 """
 
 import pytest
+import allure
 from page_objects.calculator_page import CalculatorPage
 
 
@@ -29,11 +30,15 @@ def count_digits(number: float) -> int:
     return len(num_str)
 
 
+@allure.feature("Addition")
+@allure.story("Basic Operations")
 @pytest.mark.calculator
 @pytest.mark.addition
 class TestAdditionBasic:
     """Базовые тесты операции сложения."""
     
+    @allure.title("Smoke test: 2 + 2 = 4")
+    @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.smoke
     def test_addition_2_plus_2(self, calculator):
         """
@@ -45,6 +50,8 @@ class TestAdditionBasic:
         result = calculator.get_result_as_number()
         assert result == 4, f"Expected 2+2=4, but got {result}"
     
+    @allure.title("Test digit count in addition results")
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize("num1,num2,expected_result,description", [
         (1, 1, 2, "1 digit + 1 digit = 1 digit"),
         (5, 7, 12, "1 digit + 1 digit = 2 digits"),
@@ -75,6 +82,8 @@ class TestAdditionBasic:
         assert actual_digits == expected_digits, \
             f"{description}: expected {expected_digits} digits in result, got {actual_digits} digits"
     
+    @allure.title("Test exponential notation for large numbers")
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize("num1,num2,expected_result,description", [
         (int("1" + "0" * 29), int("1" + "0" * 29), "2e29", "50 digits + 50 digits = exponential notation"),
     ])
@@ -97,6 +106,8 @@ class TestAdditionBasic:
         assert result == expected_result, \
             f"{description}: {num1}+{num2} expected {expected_result}, but got {result}"
     
+    @allure.title("Test addition with zero")
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize("num1,num2,expected", [
         (0, 0, 0),  # 0 + 0 = 0
         (0, 5, 5),  # 0 + число = число
@@ -116,11 +127,15 @@ class TestAdditionBasic:
         assert result == expected, f"Expected {num1}+{num2}={expected}, but got {result}"
 
 
+@allure.feature("Addition")
+@allure.story("Multiple Button Presses")
 @pytest.mark.calculator
 @pytest.mark.addition
 class TestAdditionMultiplePresses:
     """Тесты повторного нажатия кнопки сложения."""
     
+    @allure.title("Test multiple + button presses")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_multiple_plus_presses_consecutive(self, calculator):
         """
         Тест: Множественное нажатие кнопки + подряд.
@@ -141,6 +156,8 @@ class TestAdditionMultiplePresses:
         assert result == 5, \
             f"Expected 2+3=5 (ignoring multiple + presses), but got {result}"
     
+    @allure.title("Test repeated equals button presses")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_addition_repeated_equals(self, calculator):
         """
         Тест: Повторное нажатие = после операции сложения.
@@ -167,11 +184,15 @@ class TestAdditionMultiplePresses:
         assert result3 == 11, f"Expected 8+3=11 (repeat operation), but got {result3}"
 
 
+@allure.feature("Addition")
+@allure.story("Chain Operations")
 @pytest.mark.calculator
 @pytest.mark.addition
 class TestAdditionChains:
     """Тесты цепочек сложений (мультипликативное сложение)."""
     
+    @allure.title("Test chain addition operations")
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize("numbers,expected", [
         ([1, 2, 3], 6),
         ([5, 5, 5], 15),
@@ -245,11 +266,15 @@ class TestAdditionChains:
             f"Expected final result 10, but got {final_result}"
 
 
+@allure.feature("Addition")
+@allure.story("Large Numbers")
 @pytest.mark.calculator
 @pytest.mark.addition
 class TestAdditionLargeNumbers:
     """Тесты сложения больших чисел."""
     
+    @allure.title("Test addition with large numbers")
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize("num1,num2,expected", [
         (1000, 2000, 3000),
         (9999, 1, 10000),
@@ -267,11 +292,15 @@ class TestAdditionLargeNumbers:
             f"Expected {num1}+{num2}={expected}, but got {result}"
 
 
+@allure.feature("Addition")
+@allure.story("Edge Cases")
 @pytest.mark.calculator
 @pytest.mark.addition
 class TestAdditionSpecialCases:
     """Специальные случаи и edge cases для сложения."""
     
+    @allure.title("Test addition after clear")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_addition_after_clear(self, calculator):
         """
         Тест: Сложение после очистки калькулятора.
@@ -290,6 +319,8 @@ class TestAdditionSpecialCases:
         assert result == 5, \
             f"Expected 2+3=5 after clear, but got {result}"
     
+    @allure.title("Test addition of number with itself")
+    @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.parametrize("num,expected", [
         (1, 2),
         (5, 10),
@@ -305,6 +336,8 @@ class TestAdditionSpecialCases:
         assert result == expected, \
             f"Expected {num}+{num}={expected}, but got {result}"
     
+    @allure.title("Test addition immediately after previous result")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_addition_immediately_after_result(self, calculator):
         """
         Тест: Сложение сразу после получения результата.
