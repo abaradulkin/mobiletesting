@@ -1,0 +1,22 @@
+{
+  "platformName": "Android",
+  "platformVersion": "13.0",
+  "deviceName": "Android Emulator",
+  "automationName": "UiAutomator2",
+  "appPackage": "com.google.android.calculator",
+  "appActivity": "com.android.calculator2.Calculator",
+  "udid": "auto",
+  "noReset": false,
+  "fullReset": false,
+  "newCommandTimeout": 300,
+  "uiautomator2ServerLaunchTimeout": 60000,
+  "uiautomator2ServerInstallTimeout": 60000,
+  "adbExecTimeout": 60000,
+  "androidInstallTimeout": 90000,
+  "autoGrantPermissions": true,
+  "settings": {
+    "waitForIdleTimeout": 100,
+    "waitForSelectorTimeout": 5000
+  }
+}
+

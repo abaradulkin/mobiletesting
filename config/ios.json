@@ -1,0 +1,20 @@
+{
+  "platformName": "iOS",
+  "platformVersion": "17.0",
+  "appium:deviceName": "Alexey’s iPhone",
+  "appium:udid": "00008140-001A19AE3CDB001C",
+  "automationName": "XCUITest",
+  "bundleId": "com.apple.calculator",
+  "noReset": false,
+  "fullReset": false,
+  "newCommandTimeout": 300,
+  "wdaLaunchTimeout": 120000,
+  "wdaConnectionTimeout": 120000,
+  "useNewWDA": false,
+  "usePrebuiltWDA": true,
+  "settings": {
+    "useJSONSource": true,
+    "snapshotMaxDepth": 50
+  }
+}
+

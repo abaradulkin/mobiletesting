@@ -1,0 +1,25 @@
+# Основные зависимости для мобильной автоматизации
+
+# Appium Python Client
+Appium-Python-Client==3.1.0
+
+# Selenium (базовая зависимость для Appium)
+selenium==4.15.2
+
+# Pytest и плагины
+pytest==7.4.3
+pytest-html==4.1.1          # HTML отчеты
+pytest-xdist==3.5.0         # Параллельный запуск тестов
+pytest-timeout==2.2.0       # Timeout для тестов
+pytest-rerunfailures==12.0  # Перезапуск упавших тестов
+
+# Утилиты
+python-dotenv==1.0.0        # Управление переменными окружения
+pyyaml==6.0.1               # Работа с YAML (опционально)
+
+# Логирование
+loguru==0.7.2               # Продвинутое логирование (опционально)
+
+# Allure отчеты (опционально)
+allure-pytest==2.13.2
+
