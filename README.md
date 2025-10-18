@@ -68,10 +68,26 @@ appium --port 4723
 4. Обновите `config/ios.json` если нужно
 
 #### Android:
-1. Подключите Android устройство или запустите эмулятор
-2. Включите Developer Options и USB Debugging
-3. Проверьте устройство: `adb devices`
-4. Обновите `config/android.json` если нужно
+1. Установите Android SDK и настройте `ANDROID_HOME`
+2. Подключите Android устройство или запустите эмулятор
+3. Включите Developer Options и USB Debugging
+4. Проверьте устройство: `adb devices`
+5. Установите Google Calculator на устройство
+6. Обновите `config/android.json` если нужно
+
+**📖 Подробная инструкция:** [docs/ANDROID_SETUP.md](docs/ANDROID_SETUP.md)
+
+**🔍 Быстрая проверка настройки Android:**
+```bash
+python3 debug_android.py
+```
+
+**🚀 Быстрый запуск тестов на Android:**
+```bash
+./run_tests_android.sh smoke     # Smoke тесты
+./run_tests_android.sh           # Все тесты
+./run_tests_android.sh allure    # С Allure отчетами
+```
 
 ### 5. Запуск тестов
 
@@ -81,6 +97,10 @@ pytest
 
 # Запуск тестов на Android
 pytest --platform android
+
+# Или используйте удобный скрипт для Android
+./run_tests_android.sh smoke      # Smoke тесты
+./run_tests_android.sh            # Все тесты
 
 # Запуск тестов на Windows
 pytest --platform windows
