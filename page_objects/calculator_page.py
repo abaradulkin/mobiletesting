@@ -52,28 +52,29 @@ class CalculatorPage:
         'result': (AppiumBy.XPATH, '//XCUIElementTypeScrollView[@name="StandardInputView"]//XCUIElementTypeStaticText'),
     }
     
-    # Локаторы для Android (используют resource id)
+    # Локаторы для Android (универсальные, работают с разными калькуляторами)
+    # Используют XPATH с текстом для совместимости с Google/Samsung/другими калькуляторами
     ANDROID_LOCATORS = {
-        # Цифры
-        '0': (AppiumBy.ID, 'com.google.android.calculator:id/digit_0'),
-        '1': (AppiumBy.ID, 'com.google.android.calculator:id/digit_1'),
-        '2': (AppiumBy.ID, 'com.google.android.calculator:id/digit_2'),
-        '3': (AppiumBy.ID, 'com.google.android.calculator:id/digit_3'),
-        '4': (AppiumBy.ID, 'com.google.android.calculator:id/digit_4'),
-        '5': (AppiumBy.ID, 'com.google.android.calculator:id/digit_5'),
-        '6': (AppiumBy.ID, 'com.google.android.calculator:id/digit_6'),
-        '7': (AppiumBy.ID, 'com.google.android.calculator:id/digit_7'),
-        '8': (AppiumBy.ID, 'com.google.android.calculator:id/digit_8'),
-        '9': (AppiumBy.ID, 'com.google.android.calculator:id/digit_9'),
-        # Операции
-        'plus': (AppiumBy.ID, 'com.google.android.calculator:id/op_add'),
-        'minus': (AppiumBy.ID, 'com.google.android.calculator:id/op_sub'),
-        'multiply': (AppiumBy.ID, 'com.google.android.calculator:id/op_mul'),
-        'divide': (AppiumBy.ID, 'com.google.android.calculator:id/op_div'),
-        'equals': (AppiumBy.ID, 'com.google.android.calculator:id/eq'),
-        'clear': (AppiumBy.ID, 'com.google.android.calculator:id/clr'),
-        # Результат
-        'result': (AppiumBy.ID, 'com.google.android.calculator:id/result_final'),
+        # Цифры (используем content-desc или text)
+        '0': (AppiumBy.XPATH, '//*[@content-desc="0" or @text="0"]'),
+        '1': (AppiumBy.XPATH, '//*[@content-desc="1" or @text="1"]'),
+        '2': (AppiumBy.XPATH, '//*[@content-desc="2" or @text="2"]'),
+        '3': (AppiumBy.XPATH, '//*[@content-desc="3" or @text="3"]'),
+        '4': (AppiumBy.XPATH, '//*[@content-desc="4" or @text="4"]'),
+        '5': (AppiumBy.XPATH, '//*[@content-desc="5" or @text="5"]'),
+        '6': (AppiumBy.XPATH, '//*[@content-desc="6" or @text="6"]'),
+        '7': (AppiumBy.XPATH, '//*[@content-desc="7" or @text="7"]'),
+        '8': (AppiumBy.XPATH, '//*[@content-desc="8" or @text="8"]'),
+        '9': (AppiumBy.XPATH, '//*[@content-desc="9" or @text="9"]'),
+        # Операции (универсальные паттерны)
+        'plus': (AppiumBy.XPATH, '//*[@content-desc="plus" or @content-desc="add" or @content-desc="+" or @text="+"]'),
+        'minus': (AppiumBy.XPATH, '//*[@content-desc="minus" or @content-desc="subtract" or @content-desc="−" or @text="−" or @text="-"]'),
+        'multiply': (AppiumBy.XPATH, '//*[@content-desc="multiply" or @content-desc="×" or @text="×" or @text="*"]'),
+        'divide': (AppiumBy.XPATH, '//*[@content-desc="divide" or @content-desc="÷" or @text="÷" or @text="/"]'),
+        'equals': (AppiumBy.XPATH, '//*[@content-desc="equals" or @content-desc="=" or @text="="]'),
+        'clear': (AppiumBy.XPATH, '//*[@content-desc="clear" or @content-desc="C" or @content-desc="AC" or @text="C" or @text="AC" or contains(@resource-id, "clear") or contains(@resource-id, "clr")]'),
+        # Результат (ищем элемент с числовым текстом в верхней части экрана)
+        'result': (AppiumBy.XPATH, '(//*[contains(@resource-id, "result") or contains(@resource-id, "formula") or contains(@resource-id, "display")])[1]'),
     }
     
     def __init__(self):
@@ -288,6 +289,17 @@ class CalculatorPage:
             
             # Убираем запятые из больших чисел (iOS форматирует 1000 как 1,000)
             cleaned_text = cleaned_text.replace(',', '')
+            
+            # Для Android: убираем дополнительный текст (Samsung Calculator добавляет "Calculation result")
+            if self.platform == 'android':
+                # Извлекаем только число из строки типа "4Calculationresult"
+                # Ищем паттерн числа в начале строки
+                import re
+                number_match = re.match(r'^([−\-]?[\d.]+(?:e[+\-]?\d+)?)', cleaned_text)
+                if number_match:
+                    cleaned_text = number_match.group(1)
+                # Убираем любой текстовый мусор в конце
+                cleaned_text = re.sub(r'[A-Za-z\s]+$', '', cleaned_text)
             
             logger.info(f"Result: {cleaned_text}")
             return cleaned_text
