@@ -14,6 +14,7 @@
   "adbExecTimeout": 60000,
   "androidInstallTimeout": 90000,
   "autoGrantPermissions": true,
+  "orientation": "PORTRAIT",
   "settings": {
     "waitForIdleTimeout": 100,
     "waitForSelectorTimeout": 5000

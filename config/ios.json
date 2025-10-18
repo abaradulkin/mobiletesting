@@ -12,6 +12,7 @@
   "wdaConnectionTimeout": 120000,
   "useNewWDA": false,
   "usePrebuiltWDA": true,
+  "orientation": "PORTRAIT",
   "settings": {
     "useJSONSource": true,
     "snapshotMaxDepth": 50

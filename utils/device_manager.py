@@ -10,6 +10,8 @@ from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.common.exceptions import WebDriverException
 import logging
+import time
+import allure
 
 logger = logging.getLogger(__name__)
 
@@ -83,6 +85,7 @@ class DeviceManager:
     
     # ==================== Управление приложением ====================
     
+    @allure.step("Start application")
     def start_app(self) -> None:
         """
         Запускает приложение на устройстве.
@@ -106,6 +109,7 @@ class DeviceManager:
             logger.error(f"Failed to start app: {e}")
             raise
     
+    @allure.step("Stop application")
     def stop_app(self) -> None:
         """
         Останавливает приложение на устройстве.
@@ -120,6 +124,7 @@ class DeviceManager:
             logger.error(f"Failed to stop app: {e}")
             raise
     
+    @allure.step("Restart application")
     def restart_app(self) -> None:
         """
         Перезапускает приложение (stop + start).
@@ -153,6 +158,7 @@ class DeviceManager:
             logger.error(f"Failed to check app state: {e}")
             return False
     
+    @allure.step("Send application to background for {seconds} seconds")
     def background_app(self, seconds: int = 5) -> None:
         """
         Отправляет приложение в фон на указанное время.
@@ -169,23 +175,31 @@ class DeviceManager:
     
     # ==================== Управление устройством ====================
     
-    def rotate_to_landscape(self) -> None:
-        """Поворачивает устройство в landscape ориентацию."""
-        try:
-            self._driver.orientation = "LANDSCAPE"
-            logger.info("Device rotated to LANDSCAPE")
-        except WebDriverException as e:
-            logger.error(f"Failed to rotate to landscape: {e}")
-            raise
+    @allure.step("Rotate device to landscape orientation")
+    def rotate_to_landscape(self, wait_for_ui: bool = True) -> None:
+        """
+        Поворачивает устройство в landscape ориентацию.
+        
+        Args:
+            wait_for_ui: Если True, ожидает перестройку UI после поворота (2 сек)
+        """
+        self._driver.orientation = "LANDSCAPE"
+        
+        if wait_for_ui:
+            time.sleep(2)
     
-    def rotate_to_portrait(self) -> None:
-        """Поворачивает устройство в portrait ориентацию."""
-        try:
-            self._driver.orientation = "PORTRAIT"
-            logger.info("Device rotated to PORTRAIT")
-        except WebDriverException as e:
-            logger.error(f"Failed to rotate to portrait: {e}")
-            raise
+    @allure.step("Rotate device to portrait orientation")
+    def rotate_to_portrait(self, wait_for_ui: bool = True) -> None:
+        """
+        Поворачивает устройство в portrait ориентацию.
+        
+        Args:
+            wait_for_ui: Если True, ожидает перестройку UI после поворота (2 сек)
+        """
+        self._driver.orientation = "PORTRAIT"
+        
+        if wait_for_ui:
+            time.sleep(2)
     
     def get_orientation(self) -> str:
         """
@@ -195,6 +209,24 @@ class DeviceManager:
             'PORTRAIT' или 'LANDSCAPE'
         """
         return self._driver.orientation
+    
+    def is_portrait(self) -> bool:
+        """
+        Проверяет, находится ли устройство в портретной ориентации.
+        
+        Returns:
+            True если ориентация PORTRAIT, False иначе
+        """
+        return self.get_orientation() == "PORTRAIT"
+    
+    def is_landscape(self) -> bool:
+        """
+        Проверяет, находится ли устройство в пейзажной ориентации.
+        
+        Returns:
+            True если ориентация LANDSCAPE, False иначе
+        """
+        return self.get_orientation() == "LANDSCAPE"
     
     def toggle_wifi(self, enable: bool = None) -> None:
         """
@@ -275,6 +307,7 @@ class DeviceManager:
     
     # ==================== Дополнительные утилиты ====================
     
+    @allure.step("Take screenshot")
     def take_screenshot(self, filename: str = None) -> str:
         """
         Делает скриншот экрана.
@@ -311,6 +344,7 @@ class DeviceManager:
             logger.error(f"Failed to get page source: {e}")
             raise
     
+    @allure.step("Reset application")
     def reset(self) -> None:
         """
         Сбрасывает состояние приложения (переустановка).
@@ -322,6 +356,7 @@ class DeviceManager:
             logger.error(f"Failed to reset app: {e}")
             raise
     
+    @allure.step("Close application and driver session")
     def close_app(self) -> None:
         """
         Закрывает приложение и завершает driver сессию.

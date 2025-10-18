@@ -52,29 +52,46 @@ class CalculatorPage:
         'result': (AppiumBy.XPATH, '//XCUIElementTypeScrollView[@name="StandardInputView"]//XCUIElementTypeStaticText'),
     }
     
-    # Локаторы для Android (универсальные, работают с разными калькуляторами)
-    # Используют XPATH с текстом для совместимости с Google/Samsung/другими калькуляторами
+    # Локаторы для Android
+    # Samsung Calculator: используем ACCESSIBILITY_ID (content-desc) для цифр,
+    # ID для операций и результата
     ANDROID_LOCATORS = {
-        # Цифры (используем content-desc или text)
-        '0': (AppiumBy.XPATH, '//*[@content-desc="0" or @text="0"]'),
-        '1': (AppiumBy.XPATH, '//*[@content-desc="1" or @text="1"]'),
-        '2': (AppiumBy.XPATH, '//*[@content-desc="2" or @text="2"]'),
-        '3': (AppiumBy.XPATH, '//*[@content-desc="3" or @text="3"]'),
-        '4': (AppiumBy.XPATH, '//*[@content-desc="4" or @text="4"]'),
-        '5': (AppiumBy.XPATH, '//*[@content-desc="5" or @text="5"]'),
-        '6': (AppiumBy.XPATH, '//*[@content-desc="6" or @text="6"]'),
-        '7': (AppiumBy.XPATH, '//*[@content-desc="7" or @text="7"]'),
-        '8': (AppiumBy.XPATH, '//*[@content-desc="8" or @text="8"]'),
-        '9': (AppiumBy.XPATH, '//*[@content-desc="9" or @text="9"]'),
-        # Операции (универсальные паттерны)
-        'plus': (AppiumBy.XPATH, '//*[@content-desc="plus" or @content-desc="add" or @content-desc="+" or @text="+"]'),
-        'minus': (AppiumBy.XPATH, '//*[@content-desc="minus" or @content-desc="subtract" or @content-desc="−" or @text="−" or @text="-"]'),
-        'multiply': (AppiumBy.XPATH, '//*[@content-desc="multiply" or @content-desc="×" or @text="×" or @text="*"]'),
-        'divide': (AppiumBy.XPATH, '//*[@content-desc="divide" or @content-desc="÷" or @text="÷" or @text="/"]'),
-        'equals': (AppiumBy.XPATH, '//*[@content-desc="equals" or @content-desc="=" or @text="="]'),
-        'clear': (AppiumBy.XPATH, '//*[@content-desc="clear" or @content-desc="C" or @content-desc="AC" or @text="C" or @text="AC" or contains(@resource-id, "clear") or contains(@resource-id, "clr")]'),
-        # Результат (ищем элемент с числовым текстом в верхней части экрана)
-        'result': (AppiumBy.XPATH, '(//*[contains(@resource-id, "result") or contains(@resource-id, "formula") or contains(@resource-id, "display")])[1]'),
+        # Цифры (используем content-desc для лучшей совместимости)
+        '0': (AppiumBy.ACCESSIBILITY_ID, '0'),
+        '1': (AppiumBy.ACCESSIBILITY_ID, '1'),
+        '2': (AppiumBy.ACCESSIBILITY_ID, '2'),
+        '3': (AppiumBy.ACCESSIBILITY_ID, '3'),
+        '4': (AppiumBy.ACCESSIBILITY_ID, '4'),
+        '5': (AppiumBy.ACCESSIBILITY_ID, '5'),
+        '6': (AppiumBy.ACCESSIBILITY_ID, '6'),
+        '7': (AppiumBy.ACCESSIBILITY_ID, '7'),
+        '8': (AppiumBy.ACCESSIBILITY_ID, '8'),
+        '9': (AppiumBy.ACCESSIBILITY_ID, '9'),
+        # Операции (используем ID для Samsung Calculator)
+        'plus': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_add'),
+        'minus': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_sub'),
+        'multiply': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_mul'),
+        'divide': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_div'),
+        'equals': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_equal'),
+        'clear': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_clear'),
+        # Результат (Samsung Calculator отображает результат в formula field после нажатия equals)
+        'result': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_edt_formula'),
+        
+        # Научные функции (доступны только в landscape режиме)
+        'sin': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_sin'),
+        'cos': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_cos'),
+        'tan': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_tan'),
+        'ln': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_ln'),
+        'log': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_log'),
+        'x_squared': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_x_2'),
+        'x_power_y': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_x_y'),
+        'sqrt': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_root'),
+        'inverse': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_1_x'),
+        'abs': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_abs'),
+        'pi': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_pie'),
+        'e': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_e'),
+        'e_power_x': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_e_x'),
+        'deg_rad': (AppiumBy.ID, 'com.sec.android.app.popupcalculator:id/calc_keypad_btn_deg_rad'),
     }
     
     def __init__(self):
@@ -292,9 +309,15 @@ class CalculatorPage:
             
             # Для Android: убираем дополнительный текст (Samsung Calculator добавляет "Calculation result")
             if self.platform == 'android':
-                # Извлекаем только число из строки типа "4Calculationresult"
-                # Ищем паттерн числа в начале строки
                 import re
+                
+                # Samsung Calculator отображает отрицательные числа как " Minus 5" вместо "-5"
+                if 'Minus' in cleaned_text:
+                    # Преобразуем " Minus 5" → "-5"
+                    cleaned_text = cleaned_text.replace('Minus', '').strip()
+                    cleaned_text = '-' + cleaned_text
+                
+                # Извлекаем только число из строки типа "4Calculationresult"
                 number_match = re.match(r'^([−\-]?[\d.]+(?:e[+\-]?\d+)?)', cleaned_text)
                 if number_match:
                     cleaned_text = number_match.group(1)
@@ -432,4 +455,24 @@ class CalculatorPage:
             return True
         except TimeoutException:
             return False
-
+    
+    def is_button_visible(self, button_key: str, timeout: int = 2) -> bool:
+        """
+        Проверяет, видна ли кнопка на экране.
+        
+        Args:
+            button_key: Ключ кнопки из словаря локаторов (например, 'sin', 'cos', 'plus')
+            timeout: Время ожидания элемента в секундах (по умолчанию 2 сек)
+            
+        Returns:
+            True если кнопка найдена и видна, False если кнопка не найдена
+            
+        Example:
+            >>> if calculator.is_button_visible('sin'):
+            >>>     print("Scientific mode active")
+        """
+        try:
+            self._find_element(button_key, timeout=timeout)
+            return True
+        except TimeoutException:
+            return False

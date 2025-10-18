@@ -217,7 +217,7 @@ def calculator(device_manager, screenshot_on_failure) -> CalculatorPage:
     
     Запускает приложение перед каждым тестом и останавливает после.
     Обеспечивает полную изоляцию тестов - каждый тест начинается 
-    с чистого состояния приложения.
+    с чистого состояния приложения в портретной ориентации (установлено через capabilities).
     
     Args:
         device_manager: Session-scoped DeviceManager
@@ -226,8 +226,14 @@ def calculator(device_manager, screenshot_on_failure) -> CalculatorPage:
         CalculatorPage instance для работы с UI калькулятора
     """
     # Setup: Запускаем приложение перед каждым тестом
+    # Ориентация устанавливается через capabilities, но принудительно проверяем/устанавливаем PORTRAIT
     if device_manager.is_app_running():
         device_manager.stop_app()
+    
+    # Принудительно устанавливаем портретную ориентацию перед запуском приложения
+    if not device_manager.is_portrait():
+        device_manager.rotate_to_portrait(wait_for_ui=False)
+    
     device_manager.start_app()
     
     # Создаем и возвращаем объект CalculatorPage

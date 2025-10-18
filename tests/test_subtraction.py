@@ -53,6 +53,8 @@ class TestSubtractionBasic:
         (1000, 500, 500),
         (999, 999, 0),
     ])
+    @allure.title("Test subtraction positive result")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_positive_result(self, calculator, num1, num2, expected):
         """
         Тест: Вычитание с положительным результатом (num1 >= num2).
@@ -65,6 +67,8 @@ class TestSubtractionBasic:
         assert result == expected, \
             f"Expected {num1}-{num2}={expected}, but got {result}"
     
+    @allure.title("Test subtraction zero minus zero")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_zero_minus_zero(self, calculator):
         """
         Тест: 0 - 0 = 0
@@ -75,6 +79,8 @@ class TestSubtractionBasic:
         result = calculator.get_result_as_number()
         assert result == 0, f"Expected 0-0=0, but got {result}"
     
+    @allure.title("Test subtraction number minus zero")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_number_minus_zero(self, calculator):
         """
         Тест: 5 - 0 = 5
@@ -85,6 +91,8 @@ class TestSubtractionBasic:
         result = calculator.get_result_as_number()
         assert result == 5, f"Expected 5-0=5, but got {result}"
     
+    @allure.title("Test subtraction same numbers")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_same_numbers(self, calculator):
         """
         Тест: 7 - 7 = 0
@@ -103,6 +111,8 @@ class TestSubtractionBasic:
 class TestSubtractionWithZero:
     """Тесты вычитания с нулем (граничные случаи)."""
     
+    @allure.title("Test zero minus zero")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_zero_minus_zero(self, calculator):
         """
         Тест: 0 - 0 = 0
@@ -120,6 +130,8 @@ class TestSubtractionWithZero:
         (100, 100),
         (999, 999),
     ])
+    @allure.title("Test number minus zero")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_number_minus_zero(self, calculator, number, expected):
         """
         Тест: число - 0 = число
@@ -137,6 +149,8 @@ class TestSubtractionWithZero:
         (10, -10),
         (100, -100),
     ])
+    @allure.title("Test zero minus number")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_zero_minus_number(self, calculator, number, expected):
         """
         Тест: 0 - число = -число
@@ -167,6 +181,8 @@ class TestSubtractionNegativeResults:
         (50, 100, -50),
         (100, 999, -899),
     ])
+    @allure.title("Test subtraction negative result")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_negative_result(self, calculator, num1, num2, expected):
         """
         Тест: Вычитание большего числа из меньшего (отрицательный результат).
@@ -189,6 +205,8 @@ class TestSubtractionNegativeResults:
 class TestSubtractionMultiplePresses:
     """Тесты повторного нажатия кнопки вычитания."""
     
+    @allure.title("Test multiple minus presses consecutive")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_multiple_minus_presses_consecutive(self, calculator):
         """
         Тест: Множественное нажатие кнопки - подряд.
@@ -229,6 +247,8 @@ class TestSubtractionChains:
         ([10, 0, 5, 0], 5),    # 10-0-5-0=5
         ([20, 0, 10, 0], 10),  # 20-0-10-0=10
     ])
+    @allure.title("Test chain subtraction")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_chain_subtraction(self, calculator, numbers, expected):
         """
         Тест: Цепочки вычитаний вида num1 - num2 - num3 - ... = результат.
@@ -250,6 +270,8 @@ class TestSubtractionChains:
         assert result == expected, \
             f"Expected {operation_str}={expected}, but got {result}"
     
+    @allure.title("Test chain without final equals")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_chain_without_final_equals(self, calculator):
         """
         Тест: Цепочка вычитаний без финального =.
@@ -268,6 +290,8 @@ class TestSubtractionChains:
         assert result == 12, \
             f"Expected 20-5-3=12, but got {result}"
     
+    @allure.title("Test chain subtraction with equals in middle")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_chain_subtraction_with_equals_in_middle(self, calculator):
         """
         Тест: Цепочка с нажатием = в середине.
@@ -311,6 +335,8 @@ class TestSubtractionLargeNumbers:
         (300000, 100000, 200000),
         (1000000, 1, 999999),
     ])
+    @allure.title("Test subtraction large numbers")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_large_numbers(self, calculator, num1, num2, expected):
         """
         Тест: Вычитание больших чисел.
@@ -330,6 +356,8 @@ class TestSubtractionLargeNumbers:
 class TestSubtractionSpecialCases:
     """Специальные случаи и edge cases для вычитания."""
     
+    @allure.title("Test subtraction after clear")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_after_clear(self, calculator):
         """
         Тест: Вычитание после очистки калькулятора.
@@ -348,6 +376,8 @@ class TestSubtractionSpecialCases:
         assert result == 4, \
             f"Expected 7-3=4 after clear, but got {result}"
     
+    @allure.title("Test subtraction same number")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_same_number(self, calculator):
         """
         Тест: Вычитание числа из самого себя.
@@ -362,6 +392,8 @@ class TestSubtractionSpecialCases:
             assert result == expected, \
                 f"Expected {num}-{num}={expected}, but got {result}"
     
+    @allure.title("Test subtraction immediately after result")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_immediately_after_result(self, calculator):
         """
         Тест: Вычитание сразу после получения результата.
@@ -386,6 +418,8 @@ class TestSubtractionSpecialCases:
         assert result2 == 5, \
             f"Expected 7-2=5 (continuation), but got {result2}"
     
+    @allure.title("Test subtraction repeated equals")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_repeated_equals(self, calculator):
         """
         Тест: Повторное нажатие = после операции вычитания.
@@ -411,6 +445,8 @@ class TestSubtractionSpecialCases:
         assert result2 in [7, 4], \
             f"Expected either 7 (no change) or 4 (repeat -3), but got {result2}"
     
+    @allure.title("Test subtraction from result of addition")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_from_result_of_addition(self, calculator):
         """
         Тест: Вычитание из результата сложения.
@@ -443,6 +479,8 @@ class TestSubtractionSpecialCases:
 class TestSubtractionEdgeCases:
     """Экстремальные и граничные случаи для вычитания."""
     
+    @allure.title("Test subtraction result becomes zero")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_result_becomes_zero(self, calculator):
         """
         Тест: Вычитание до нуля.
@@ -471,6 +509,8 @@ class TestSubtractionEdgeCases:
         (999, 999),
         (12345, 12345),
     ])
+    @allure.title("Test subtraction equal numbers result zero")
+    @allure.severity(allure.severity_level.NORMAL)
     def test_subtraction_equal_numbers_result_zero(self, calculator, num1, num2):
         """
         Тест: Вычитание равных чисел всегда дает 0.
